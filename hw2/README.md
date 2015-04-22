@@ -5,4 +5,6 @@ Shit's pretty cool, yo.
 Run in terminal.
 ```
 $ pip install xtermcolor
+$ pip install numpy
+$ pip install scipy
 ```
