@@ -67,6 +67,6 @@ def pretty_print_vector(vector):
             print ss
 
 
-build_k_classifiers(16, data_training)
+build_k_classifiers(int(sys.argv[1]), data_training)
 print ""
 print "Total errors: " + str(total_err) + "/" + str(len(data_training)) + " -- " + str((total_err/len(data_training))*100)[:5] + "%"
