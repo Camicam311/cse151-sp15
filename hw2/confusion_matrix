@@ -1,0 +1,41 @@
+Predicted: 0 Actual: 3 Sample Results: [3, 0, 5] ERR: 66.66%
+Predicted: 1 Actual: 3 Sample Results: [8, 1, 1] ERR: 100.0%
+Predicted: 7 Actual: 5 Sample Results: [7, 7, 5] ERR: 66.66%
+Predicted: 1 Actual: 6 Sample Results: [6, 7, 1] ERR: 66.66%
+Predicted: 6 Actual: 0 Sample Results: [6, 6, 6] ERR: 100.0%
+Predicted: 9 Actual: 5 Sample Results: [9, 5, 9] ERR: 66.66%
+Predicted: 1 Actual: 2 Sample Results: [2, 1, 1] ERR: 66.66%
+Predicted: 8 Actual: 2 Sample Results: [8, 8, 2] ERR: 66.66%
+Predicted: 2 Actual: 9 Sample Results: [9, 3, 2] ERR: 66.66%
+Predicted: 8 Actual: 3 Sample Results: [8, 8, 8] ERR: 100.0%
+Predicted: 6 Actual: 0 Sample Results: [6, 6, 0] ERR: 66.66%
+Predicted: 3 Actual: 8 Sample Results: [8, 5, 3] ERR: 66.66%
+Predicted: 3 Actual: 5 Sample Results: [3, 5, 8] ERR: 66.66%
+Predicted: 1 Actual: 3 Sample Results: [1, 1, 1] ERR: 100.0%
+Predicted: 6 Actual: 8 Sample Results: [0, 6, 6] ERR: 100.0%
+Predicted: 1 Actual: 2 Sample Results: [2, 1, 1] ERR: 66.66%
+Predicted: 9 Actual: 3 Sample Results: [3, 9, 9] ERR: 66.66%
+Predicted: 9 Actual: 7 Sample Results: [7, 9, 9] ERR: 66.66%
+Predicted: 1 Actual: 6 Sample Results: [1, 1, 1] ERR: 100.0%
+Predicted: 0 Actual: 6 Sample Results: [6, 5, 0] ERR: 66.66%
+Predicted: 9 Actual: 4 Sample Results: [4, 9, 9] ERR: 66.66%
+Predicted: 1 Actual: 3 Sample Results: [1, 1, 1] ERR: 100.0%
+Predicted: 9 Actual: 7 Sample Results: [9, 7, 9] ERR: 66.66%
+Predicted: 0 Actual: 3 Sample Results: [5, 0, 1] ERR: 100.0%
+Predicted: 6 Actual: 0 Sample Results: [6, 6, 0] ERR: 66.66%
+Predicted: 3 Actual: 5 Sample Results: [5, 3, 3] ERR: 66.66%
+Predicted: 4 Actual: 9 Sample Results: [4, 4, 4] ERR: 100.0%
+Predicted: 2 Actual: 3 Sample Results: [7, 3, 2] ERR: 66.66%
+Predicted: 9 Actual: 4 Sample Results: [9, 9, 9] ERR: 100.0%
+
+Total errors: 29.0/300 -- 9.666%
+0.0000, 0.0000, 0.0000, 0.0714, 0.0000, 0.0000, 0.0357, 0.0000, 0.0000, 0.0000
+0.0000, 0.0000, 0.0714, 0.1071, 0.0000, 0.0000, 0.0714, 0.0000, 0.0000, 0.0000
+0.0000, 0.0000, 0.0000, 0.0263, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0263
+0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0667, 0.0000, 0.0000, 0.0333, 0.0000
+0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0357
+0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000
+0.0811, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0270, 0.0000
+0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0333, 0.0000, 0.0000, 0.0000, 0.0000
+0.0000, 0.0000, 0.0357, 0.0357, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000
+0.0000, 0.0000, 0.0000, 0.0370, 0.0741, 0.0370, 0.0000, 0.0741, 0.0000, 0.0000

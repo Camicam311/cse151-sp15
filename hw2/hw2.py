@@ -8,7 +8,12 @@ from scipy import stats
 
 data_training = [numpy.array(map(int,x.rstrip().split())) for x in open("hw2train.txt").read().splitlines()]
 data_validate = [numpy.array(map(int,x.rstrip().split())) for x in open("hw2validate.txt").read().splitlines()]
+data_test = [numpy.array(map(int,x.rstrip().split())) for x in open("hw2test.txt").read().splitlines()]
 data_training_map = {}
+data_validate_map = {}
+
+data_test_map = {}
+data_test_counts = [0,0,0,0,0,0,0,0,0,0]
 
 ''' 
 Computes Euclidian distance.
@@ -42,6 +47,9 @@ Builds k classifiers
 '''
 global total_err
 total_err = 0.0
+global confusion
+confusion = [[0.0 for x in range (10)] for x in range (10)]
+
 
 def build_k_classifiers(k, input_list):
     global total_err
@@ -49,10 +57,17 @@ def build_k_classifiers(k, input_list):
         res = get_neighbors(data,k)
         sample = [(z[-1]) for (x,z) in res]
         actual = data[-1]
+
+        data_test_counts[actual] += 1 #N sub j
         #print sample
         #print actual
         prediction = stats.mode(sample)[0][0]
         if prediction != actual:
+            #labeled j (prediction) but actually i (actual) 
+            confusion[prediction][actual] += 1
+            #confusion[actual][prediction] += 1
+
+
             error_percentage = calc_error(sample,actual)
             print "Predicted: " + str(prediction) + " " + "Actual: " + str(actual)+ " Sample Results: " + str(sample) + " ERR: " + str(100 * error_percentage)[:5]+"%"
             total_err += 1
@@ -68,6 +83,17 @@ def pretty_print_vector(vector):
             print ss
 
 
-build_k_classifiers(int(sys.argv[1]), data_validate)
+build_k_classifiers(3, data_test)
 print ""
 print "Total errors: " + str(total_err) + "/" + str(len(data_validate)) + " -- " + str((total_err/len(data_validate))*100)[:5] + "%"
+for row in range(len(confusion)):
+    for column in range(len(confusion[row])):
+        confusion[row][column] = confusion[row][column] / data_test_counts[row]
+for row in confusion:
+    s = ''
+    for num in row:
+        s += "{:.4f}".format(num)
+        s += ", "
+    print s[:-2]
+    
+    
