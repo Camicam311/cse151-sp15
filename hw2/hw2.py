@@ -7,6 +7,7 @@ from scipy import stats
 
 
 data_training = [numpy.array(map(int,x.rstrip().split())) for x in open("hw2train.txt").read().splitlines()]
+data_validate = [numpy.array(map(int,x.rstrip().split())) for x in open("hw2validate.txt").read().splitlines()]
 data_training_map = {}
 
 ''' 
@@ -67,6 +68,6 @@ def pretty_print_vector(vector):
             print ss
 
 
-build_k_classifiers(int(sys.argv[1]), data_training)
+build_k_classifiers(int(sys.argv[1]), data_validate)
 print ""
-print "Total errors: " + str(total_err) + "/" + str(len(data_training)) + " -- " + str((total_err/len(data_training))*100)[:5] + "%"
+print "Total errors: " + str(total_err) + "/" + str(len(data_validate)) + " -- " + str((total_err/len(data_validate))*100)[:5] + "%"
