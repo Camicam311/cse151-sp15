@@ -72,7 +72,7 @@ def build_k_classifiers(k, input_list):
                 for x in res:
                     print x[-1][-1]
                     vec = x[-1][:len(x[-1])-1]
-                    #pretty_print_vector(vec)
+                    pretty_print_vector(vec)
             #labeled j (prediction) but actually i (actual) 
             confusion[prediction][actual] += 1
             #confusion[actual][prediction] += 1
@@ -85,12 +85,11 @@ def build_k_classifiers(k, input_list):
 Pretty prints vector as image to terminal for debugging.
 '''
 def pretty_print_vector(vector):
-    for res in vector:
-        for x in range(28):
-            ss = ''
-            for y in res[x*28:x*28+28]:
-                ss += colorize("@",int(y))
-            print ss
+    for x in range(28):
+        ss = ''
+        for y in vector[x*28:x*28+28]:
+            ss += colorize("@",int(y))
+        print ss
 
 build_k_classifiers(3, data_test)
 print ""
