@@ -50,9 +50,12 @@ total_err = 0.0
 global confusion
 confusion = [[0.0 for x in range (10)] for x in range (10)]
 
+global twoeight 
+twoeight = 0
 
 def build_k_classifiers(k, input_list):
     global total_err
+    global twoeight
     for data in input_list:
         res = get_neighbors(data,k)
         sample = [(z[-1]) for (x,z) in res]
@@ -63,6 +66,13 @@ def build_k_classifiers(k, input_list):
         #print actual
         prediction = stats.mode(sample)[0][0]
         if prediction != actual:
+            if prediction == 8 and actual == 2:
+                twoeight += 1
+                print "Samples: "
+                for x in res:
+                    print x[-1][-1]
+                    vec = x[-1][:len(x[-1])-1]
+                    #pretty_print_vector(vec)
             #labeled j (prediction) but actually i (actual) 
             confusion[prediction][actual] += 1
             #confusion[actual][prediction] += 1
@@ -82,7 +92,6 @@ def pretty_print_vector(vector):
                 ss += colorize("@",int(y))
             print ss
 
-
 build_k_classifiers(3, data_test)
 print ""
 print "Total errors: " + str(total_err) + "/" + str(len(data_validate)) + " -- " + str((total_err/len(data_validate))*100)[:5] + "%"
@@ -95,5 +104,7 @@ for row in confusion:
         s += "{:.4f}".format(num)
         s += ", "
     print s[:-2]
+
+print "twoeight: " + str(twoeight)
     
     
