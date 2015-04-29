@@ -33,21 +33,40 @@ def info_gain(attr, data):
         attr_counts[atr] = [a[attr] for a in data].count(attr)
 
     for val in attr_counts.keys():
-        p = attr_counts/len(data)
+        p = attr_counts[val]/len(data)
         ent_sub += p * entropy([elm for elm in data if elm[attr] == val])
 
     return entropy(data) - ent_sub
 
 def best_feature(data):
     ENT = entropy(data)
-    feature_num = 4
+    best_info = -1
+    best_attr = -1
+
+    for x in range(4):
+        res = info_gain(x,data)
+        if res > best_info:
+            best_info = res
+            best_attr = x
+
+    return best_attr
 
 def build_tree(data):
+    if not data or len(data) == 1:
+        print "help"
+        return 1 # don't leave this here
     if is_pure(data):
         return data[0].species
-    best_feature(data)
+    print "good"
+    best = best_feature(data)
+    tree = defaultdict(lambda:{})
+    for x in set([at[best] for at in data]):
+        tree[best][x] = build_tree([dat for dat in data if dat[best] == x])
+    return tree
 
-build_tree(flowers)
+
+
+print build_tree(flowers)
 
 ''' Bonus code saving for later
     h = defaultdict(lambda: {})
