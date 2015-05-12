@@ -29,9 +29,13 @@ def calc_perceptron(data):
 
     return wc_map
 
+def build_voted_p_from_basic_p(wcm):
+    pass
+
 def print_wc_map(wcm):
     for idx in wcm:
         print "w["+str(idx)+"], c["+str(idx)+"]:",wcm[idx].w,",",wcm[idx].c
+
 
 basic_perceptron = calc_perceptron(td)
 print_wc_map(basic_perceptron)
