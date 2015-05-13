@@ -8,7 +8,6 @@ class wc:
     w = []
     c = 1
 
-
 def build_voted_perceptron(data):
     '''
     Generates dictionary of index -> wc objects for perceptron.
@@ -63,6 +62,10 @@ def print_wc_map(wcm):
     for idx in wcm:
         print "\tw["+str(idx)+"], c["+str(idx)+"]:",wcm[idx].w,",",wcm[idx].c
 
+
+"""
+Begin main script shit.
+"""
 
 bp = build_basic_perceptron(td)
 print "Basic Perceptron Classification Vector: ",bp
