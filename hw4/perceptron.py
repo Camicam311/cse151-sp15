@@ -15,11 +15,11 @@ def build_voted_perceptron(data):
     '''
 
     wc_map = defaultdict(wc)
-    wc_map[1].w = [0,0]
+    wc_map[1].w = [0 for _ in xrange(len(data[0])-1)]
 
     m = 1
 
-    for idx, feature in enumerate(data):
+    for feature in data:
         if int(feature[-1] * numpy.sum(dot(wc_map[m].w,
             feature[0:len(feature)-1]))) <= 0:
 
@@ -36,7 +36,7 @@ def build_voted_perceptron(data):
 def build_basic_perceptron(data):
     w = 0
 
-    for idx, feature in enumerate(data):
+    for feature in data:
         if int(feature[-1] * numpy.sum(dot(w,feature[0:len(feature)-1]))) <= 0:
             w = w + dot(feature[-1],feature[0:len(feature)-1])
 
@@ -53,7 +53,7 @@ def classify_voted_perceptron(datum, classifier):
     return numpy.sign(s)
 
 def classify_averaged_perceptron(datum, classifier):
-    comp = [0,0];
+    comp = [0 for _ in xrange(len(datum) - 1)]
     for x in classifier:
         comp = numpy.add(comp, classifier[x].c * classifier[x].w)
     return numpy.sign(numpy.dot(comp,datum))
