@@ -46,12 +46,11 @@ def build_voted_perceptron(data, passes = 1):
 def process_label(label, classi = 0):
     return 1 if label == classi else -1
 
-def build_basic_perceptron(data, passes = 1):
+def build_basic_perceptron(data, passes, sought_class=0):
     w = 0
-
     for _ in xrange(passes):
         for feature in data:
-            if int(process_label(feature[-1]) * numpy.sum(dot(w,
+            if int(process_label(feature[-1],sought_class) * numpy.sum(dot(w,
                 feature[0:len(feature)-1])))<=0:
 
                 w = w + dot(process_label(feature[-1]),feature[0:len(feature)-1])
@@ -111,3 +110,11 @@ print "Training Errors"
 perform_tests(data_training_a, data_training_a)
 print "\nTest Errors"
 perform_tests(data_training_a, data_testing_a)
+
+
+# multiclass[0] is the class 0 classifier, etc.
+multiclass = []
+
+for num in xrange(10):
+    multiclass.append(build_basic_perceptron(data_training_b,1,num))
+
