@@ -1,6 +1,9 @@
 from collections import defaultdict
 from numpy import dot
 import numpy
+import math
+
+from tabulate import tabulate
 
 td = [[4,0,1],[1,1,-1],[0,1,-1],[-2,-2,1]]
 
@@ -12,6 +15,9 @@ data_testing_a = [numpy.array(map(int,x.rstrip().split())) for x in
 
 data_training_b = [numpy.array(map(int,x.rstrip().split())) for x in 
         open("hw4btrain.txt").read().splitlines()]
+
+data_testing_b = [numpy.array(map(int,x.rstrip().split())) for x in 
+        open("hw4btest.txt").read().splitlines()]
 
 class wc:
     w = []
@@ -43,7 +49,7 @@ def build_voted_perceptron(data, passes = 1):
 
     return wc_map
 
-def process_label(label, classi = 0):
+def process_label(label, classi):
     return 1 if label == classi else -1
 
 def build_basic_perceptron(data, passes, sought_class=0):
@@ -53,7 +59,7 @@ def build_basic_perceptron(data, passes, sought_class=0):
             if int(process_label(feature[-1],sought_class) * numpy.sum(dot(w,
                 feature[0:len(feature)-1])))<=0:
 
-                w = w + dot(process_label(feature[-1]),feature[0:len(feature)-1])
+                w = w + dot(process_label(feature[-1],sought_class),feature[0:len(feature)-1])
     return w
 
 def classify_basic_perceptron(datum, classification_vector):
@@ -105,16 +111,51 @@ def perform_tests(d_train, d_test):
 
         print "\n\t","Averaged"
         classify_perceptron_set(d_test, vp, classify_averaged_perceptron)
-
+'''
 print "Training Errors"
 perform_tests(data_training_a, data_training_a)
 print "\nTest Errors"
 perform_tests(data_training_a, data_testing_a)
+'''
 
+def round(num, num_places = 4):
+    str_num = ''
+    if int(str(num)[:num_places + 1]) > 5:
+        str_num = str(num)[:num_places-1] + str(int(str(num)[num_places]) + 1)
+    else:
+        str_num = str(num)[:num_places]
+
+    return str_num
 
 # multiclass[0] is the class 0 classifier, etc.
+
+confusion_matrix = [[0 for _ in xrange(10)] for _ in xrange(11)]
+label_counts = [0 for _ in xrange(10)]
 multiclass = []
 
 for num in xrange(10):
     multiclass.append(build_basic_perceptron(data_training_b,1,num))
 
+for test_idx, test_datum in enumerate(data_testing_b):
+    multi_res = [0 for _ in xrange(10)]
+
+    label_counts[test_datum[-1]] += 1
+
+    for idx,classifier in enumerate(multiclass):
+        res=classify_basic_perceptron(test_datum[:len(test_datum)-1], classifier)
+        if res == 1:
+            multi_res[idx] += res
+
+    if numpy.sum(multi_res) == 1: #classified as singular thing
+        for idx, elm in enumerate(multi_res):
+            if elm == 1: 
+                confusion_matrix[idx][test_datum[-1]] += 1
+    else: #Don't know
+        confusion_matrix[10][test_datum[-1]] += 1
+
+for row in confusion_matrix:
+    for idx,elm in enumerate(row):
+        row[idx] = float(elm) / float(label_counts[idx])
+        row[idx] = str(row[idx])[:7]
+
+print tabulate(confusion_matrix)
