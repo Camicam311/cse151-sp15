@@ -83,7 +83,7 @@ def print_wc_map(wcm):
     for idx in wcm:
         print "\tw["+str(idx)+"], c["+str(idx)+"]:",wcm[idx].w,",",wcm[idx].c
 
-def classify_perceptron_set(data, classifier, function):
+def classify_perceptron_set(data, classifier, function, sought_class=0):
     error_count = 0
 
     for feature in data:
@@ -111,21 +111,11 @@ def perform_tests(d_train, d_test):
 
         print "\n\t","Averaged"
         classify_perceptron_set(d_test, vp, classify_averaged_perceptron)
-'''
+
 print "Training Errors"
 perform_tests(data_training_a, data_training_a)
 print "\nTest Errors"
 perform_tests(data_training_a, data_testing_a)
-'''
-
-def round(num, num_places = 4):
-    str_num = ''
-    if int(str(num)[:num_places + 1]) > 5:
-        str_num = str(num)[:num_places-1] + str(int(str(num)[num_places]) + 1)
-    else:
-        str_num = str(num)[:num_places]
-
-    return str_num
 
 # multiclass[0] is the class 0 classifier, etc.
 
