@@ -23,7 +23,7 @@ class wc:
     w = []
     c = 1
 
-def build_voted_perceptron(data, passes = 1):
+def build_voted_perceptron(data, passes = 1, sought_class=0):
     '''
     Generates dictionary of index -> wc objects for perceptron.
     '''
@@ -36,10 +36,10 @@ def build_voted_perceptron(data, passes = 1):
     # Should I restart m?
     for _ in xrange(passes):
         for feature in data:
-            if int(process_label(feature[-1]) * numpy.sum(dot(wc_map[m].w,
+            if int(process_label(feature[-1], sought_class) * numpy.sum(dot(wc_map[m].w,
                 feature[0:len(feature)-1]))) <= 0:
 
-                wc_map[m+1].w = wc_map[m].w + dot(process_label(feature[-1]),
+                wc_map[m+1].w = wc_map[m].w + dot(process_label(feature[-1], sought_class),
                         feature[0:len(feature)-1])
 
                 m += 1
@@ -88,7 +88,7 @@ def classify_perceptron_set(data, classifier, function, sought_class=0):
 
     for feature in data:
         res = function(feature[:len(feature)-1], classifier)
-        if res != process_label(feature[-1]):
+        if res != process_label(feature[-1],sought_class):
             error_count += 1
 
     print "\t\tError %:", str((error_count/float(len(data))) * 100) + "%"
