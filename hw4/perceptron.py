@@ -43,8 +43,8 @@ def build_voted_perceptron(data, passes = 1):
 
     return wc_map
 
-def process_label(label):
-    return -1 if label == 0 else 1
+def process_label(label, classi = 0):
+    return 1 if label == classi else -1
 
 def build_basic_perceptron(data, passes = 1):
     w = 0
