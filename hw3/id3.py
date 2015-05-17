@@ -40,16 +40,11 @@ def info_gain(attr, data):
 
     for val in attr_counts.keys():
         p = attr_counts[val]/float(len(data))
-        #print "p",p
-        #print "ent",entropy([elm for elm in data if elm[attr] == val])
-        #print [elm for elm in data if elm[attr] == val]
         ent_sub += p * entropy([elm for elm in data if elm[attr] == val])
-        #print "ent_sub,",ent_sub
 
     return entropy(data) - ent_sub
 
 def best_feature(data):
-    ENT = entropy(data)
     best_info = -1.0
     best_attr = -1
 
@@ -60,6 +55,8 @@ def best_feature(data):
             best_attr = x
 
     return best_attr
+
+#DONT TRUST THIS FUNCTION OR ITS USAGE
 def split_data(data,best,x):
     res = []
     for v in data:
@@ -69,26 +66,24 @@ def split_data(data,best,x):
             l.extend(v[best+1:])
             res.append(l)
     return res
+
 def build_tree(data):
     #if not data or len(data) == 1:
     #    return 1 # don't leave this here
     if is_pure(data):
-        print "len",len(data)
-        #print "predict",data[0].species
-        #print "predict",data[0][-1]
-        #return int(data[0].species)
         return int(data[0][-1])
     best = best_feature(data)
+    print "If feature[",best+1,"] <=","??????"
     feat_values = [x[best] for x in data]
     uniq = set(feat_values)
-    tree = defaultdict(lambda:{})
+    tree = defaultdict(lambda:{}) #### Not sure????
     for x in uniq:
         tree[best][str(x)] = build_tree(split_data(data, best, x))
 
 
     #print "feat idx",best
     #print info_gain(best,data)
-    a = set([at[best] for at in data])
+    #a = set([at[best] for at in data])
     #print "a,",a
     #for x in set([at[best] for at in data]):
         #tree[best][str(x)] = build_tree([dat for dat in data if dat[best] == x])

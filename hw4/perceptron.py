@@ -3,8 +3,6 @@ from tabulate import tabulate
 from numpy import dot
 import numpy
 
-td = [[4,0,1],[1,1,-1],[0,1,-1],[-2,-2,1]]
-
 data_training_a = [numpy.array(map(int,x.rstrip().split())) for x in 
         open("hw4atrain.txt").read().splitlines()]
 

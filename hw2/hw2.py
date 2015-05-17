@@ -91,7 +91,7 @@ def pretty_print_vector(vector):
             ss += colorize("@",int(y))
         print ss
 
-build_k_classifiers(3, data_test)
+build_k_classifiers(1, data_test)
 print ""
 print "Total errors: " + str(total_err) + "/" + str(len(data_validate)) + " -- " + str((total_err/len(data_validate))*100)[:5] + "%"
 for row in range(len(confusion)):
