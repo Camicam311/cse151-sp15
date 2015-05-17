@@ -1,9 +1,7 @@
 from collections import defaultdict
+from tabulate import tabulate
 from numpy import dot
 import numpy
-import math
-
-from tabulate import tabulate
 
 td = [[4,0,1],[1,1,-1],[0,1,-1],[-2,-2,1]]
 
@@ -92,61 +90,70 @@ def classify_perceptron_set(data, classifier, function, sought_class=0):
         if res != process_label(feature[-1],sought_class):
             error_count += 1
 
-    print "\t\tError %:", str((error_count/float(len(data))) * 100) + "%"
+    return str((error_count/float(len(data))) * 100) + "%"
 
-
-
-"""
-Begin main script shit.
-"""
 def perform_tests(d_train, d_test):
+    score_table = [[" " for _ in xrange(4)] for _ in xrange(4)]
+    score_table[0][0] = "Pass"
+    score_table[0][1] = "Basic"
+    score_table[0][2] = "Voted"
+    score_table[0][3] = "Avg'd"
     for num in xrange(3):
-        print "\n",num + 1,"Pass"
-        print "\n\t","Basic"
+        score_table[num + 1][0] = str(num)
         bp = build_basic_perceptron(d_train, num+1)
-        classify_perceptron_set(d_test, bp, classify_basic_perceptron)
+        score_table[num + 1][1] = classify_perceptron_set(d_test, bp, 
+          classify_basic_perceptron)
 
-        print "\n\t","Voted"
         vp = build_voted_perceptron(d_train, num+1)
-        classify_perceptron_set(d_test, vp, classify_voted_perceptron)
+        score_table[num + 1][2] = classify_perceptron_set(d_test, vp, 
+          classify_voted_perceptron)
 
-        print "\n\t","Averaged"
-        classify_perceptron_set(d_test, vp, classify_averaged_perceptron)
+        score_table[num + 1][3] = classify_perceptron_set(d_test, vp, 
+          classify_averaged_perceptron)
 
-print "Training Errors"
-perform_tests(data_training_a, data_training_a)
-print "\nTest Errors"
-perform_tests(data_training_a, data_testing_a)
 
-# multiclass[0] is the class 0 classifier, etc.
+    return tabulate(score_table, headers="firstrow")
 
-confusion_matrix = [[0 for _ in xrange(10)] for _ in xrange(11)]
-label_counts = [0 for _ in xrange(10)]
-multiclass = []
+def calc_confusion_matrix():
+    confusion_matrix = [[0 for _ in xrange(10)] for _ in xrange(11)]
+    label_counts = [0 for _ in xrange(10)]
+    multiclass = []
 
-for num in xrange(10):
-    multiclass.append(build_basic_perceptron(data_training_b,1,num))
+    for num in xrange(10):
+        multiclass.append(build_basic_perceptron(data_training_b,1,num))
 
-for test_idx, test_datum in enumerate(data_testing_b):
-    multi_res = [0 for _ in xrange(10)]
+    for test_idx, test_datum in enumerate(data_testing_b):
+        multi_res = [0 for _ in xrange(10)]
 
-    label_counts[test_datum[-1]] += 1
+        label_counts[test_datum[-1]] += 1
 
-    for idx,classifier in enumerate(multiclass):
-        res=classify_basic_perceptron(test_datum[:len(test_datum)-1], classifier)
-        if res == 1:
-            multi_res[idx] += res
+        for idx,classifier in enumerate(multiclass):
+            res=classify_basic_perceptron(test_datum[:len(test_datum)-1], 
+              classifier)
 
-    if numpy.sum(multi_res) == 1: #classified as singular thing
-        for idx, elm in enumerate(multi_res):
-            if elm == 1: 
-                confusion_matrix[idx][test_datum[-1]] += 1
-    else: #Don't know
-        confusion_matrix[10][test_datum[-1]] += 1
+            if res == 1:
+                multi_res[idx] += res
 
-for row in confusion_matrix:
-    for idx,elm in enumerate(row):
-        row[idx] = float(elm) / float(label_counts[idx])
-        row[idx] = str(row[idx])[:7]
+        if numpy.sum(multi_res) == 1: #classified as singular thing
+            for idx, elm in enumerate(multi_res):
+                if elm == 1: 
+                    confusion_matrix[idx][test_datum[-1]] += 1
+        else: #Don't know
+            confusion_matrix[10][test_datum[-1]] += 1
 
-print tabulate(confusion_matrix)
+    for count, row in enumerate(confusion_matrix):
+        for idx,elm in enumerate(row):
+            row[idx] = float(elm) / float(label_counts[idx])
+            row[idx] = str(row[idx])[:7]
+
+    return tabulate(confusion_matrix)
+
+def main():
+    print "\n\n\tTraining Errors"
+    print perform_tests(data_training_a, data_training_a)
+    print "\n\n\tTest Errors"
+    print perform_tests(data_training_a, data_testing_a)
+    print "\n\n\tConfusion Matrix"
+    print calc_confusion_matrix()
+
+main()
