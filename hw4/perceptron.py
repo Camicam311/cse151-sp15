@@ -36,11 +36,11 @@ def build_voted_perceptron(data, passes = 1, sought_class=0):
     # Should I restart m?
     for _ in xrange(passes):
         for feature in data:
-            if int(process_label(feature[-1], sought_class) * numpy.sum(dot(wc_map[m].w,
-                feature[0:len(feature)-1]))) <= 0:
+            if int(process_label(feature[-1], sought_class) * 
+              numpy.sum(dot(wc_map[m].w,feature[0:len(feature)-1]))) <= 0:
 
-                wc_map[m+1].w = wc_map[m].w + dot(process_label(feature[-1], sought_class),
-                        feature[0:len(feature)-1])
+                wc_map[m+1].w = wc_map[m].w + dot(process_label(feature[-1], 
+                  sought_class),feature[0:len(feature)-1])
 
                 m += 1
                 wc_map[m].c = 1
@@ -56,10 +56,11 @@ def build_basic_perceptron(data, passes, sought_class=0):
     w = 0
     for _ in xrange(passes):
         for feature in data:
-            if int(process_label(feature[-1],sought_class) * numpy.sum(dot(w,
-                feature[0:len(feature)-1])))<=0:
+            if int(process_label(feature[-1],sought_class) * 
+              numpy.sum(dot(w, feature[0:len(feature)-1])))<=0:
 
-                w = w + dot(process_label(feature[-1],sought_class),feature[0:len(feature)-1])
+                w = w + dot(process_label(feature[-1],sought_class),
+                  feature[0:len(feature)-1])
     return w
 
 def classify_basic_perceptron(datum, classification_vector):
