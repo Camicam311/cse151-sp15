@@ -22,11 +22,11 @@ class container:
 def class_pos(val): return 1 if val == 1 else -1
 
 def list_tags(num, dix, cont_list):
-    print "Words chosen by weak learners after 10 rounds of testing:"
-    print "\tSpam: ", ', '.join([dix[classi.feature] for classi in cont_list if 
-      classi.label > 0])
-    print "\tNot Spam: ", ', '.join([dix[classi.feature] for classi in cont_list if
+    print "Words chosen by weak learners after",num,"rounds of testing:"
+    print "\tSpam: ", ', '.join([dix[classi.feature] for classi in cont_list if
       classi.label < 0])
+    print "\tNot Spam: ", ', '.join([dix[classi.feature] for classi in cont_list if
+      classi.label > 0])
     print ''
 
 def boost(data,weights):
@@ -62,7 +62,7 @@ def classify(email, classifiers):
       for elm in classifiers))
 
 def perform_tests(d_train, d_test):
-    boost_counts = [2,3,7,10,15,20]
+    boost_counts = [3,7,10,15,20]
     score_table = [[" " for _ in xrange(3)] for _ in xrange(len(boost_counts)+1)]
 
     score_table[0][0] = "t"
@@ -86,7 +86,7 @@ def perform_tests(d_train, d_test):
             score_table[idx + 1][idxx + 1] = str(sum(1 for email in data_set 
               if classify(email,classi_cont_list)!=email[-1])/float(len(data_set)))
 
-        if num == 10:
+        if num <= 10:
             list_tags(num,data_dictionary,classi_cont_list)
 
     return tabulate(score_table, headers="firstrow")
